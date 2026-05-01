@@ -92,7 +92,10 @@ export const buildHorizontalGuides = ({
   return guides;
 };
 
-export const getNearestGuide = (position: number, guides: number[]): NearestGuide | null => {
+export const getNearestGuide = (
+  position: number,
+  guides: number[]
+): NearestGuide | null => {
   if (guides.length === 0) {
     return null;
   }

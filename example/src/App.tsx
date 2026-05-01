@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { GridOverlay, createTrackedComponent } from '../../src/index';
 
 const TrackedView = createTrackedComponent(View);
@@ -17,103 +17,42 @@ export default function App() {
       margin={24}
       gutter={12}
     >
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#f8fafc',
-          paddingHorizontal: 24,
-          paddingTop: 88,
-        }}
-      >
-        <TrackedView
-          trackId="home-label"
-          style={{
-            width: 176,
-            paddingVertical: 10,
-          }}
-        >
-          <Text style={{ color: '#0f172a', fontSize: 13, fontWeight: '700', letterSpacing: 1.2 }}>
-            HOME SCREEN
-          </Text>
+      <View style={styles.screen}>
+        <TrackedView trackId="home-label" style={styles.homeLabelContainer}>
+          <Text style={styles.homeLabelText}>HOME SCREEN</Text>
         </TrackedView>
 
-        <TrackedView
-          trackId="hero-title"
-          style={{
-            width: 248,
-            marginTop: 14,
-          }}
-        >
-          <Text style={{ color: '#0f172a', fontSize: 36, lineHeight: 42, fontWeight: '700' }}>
+        <TrackedView trackId="hero-title" style={styles.heroTitleContainer}>
+          <Text style={styles.heroTitleText}>
             Design with a visible rhythm.
           </Text>
         </TrackedView>
 
         <TrackedView
           trackId="hero-description"
-          style={{
-            width: 286,
-            marginTop: 18,
-          }}
+          style={styles.heroDescriptionContainer}
         >
-          <Text style={{ color: '#475569', fontSize: 16, lineHeight: 24 }}>
+          <Text style={styles.heroDescriptionText}>
             Turn on the grid overlay to verify spacing, snap content to columns,
             and inspect layout corrections in real time.
           </Text>
         </TrackedView>
 
-        <TrackedView
-          trackId="primary-cta"
-          style={{
-            marginTop: 30,
-            width: 148,
-            paddingHorizontal: 18,
-            paddingVertical: 14,
-            borderRadius: 999,
-            backgroundColor: '#0f172a',
-          }}
-        >
-          <Text style={{ color: 'white', fontWeight: '700' }}>Get Started</Text>
+        <TrackedView trackId="primary-cta" style={styles.primaryCta}>
+          <Text style={styles.primaryCtaText}>Get Started</Text>
         </TrackedView>
 
-        <View
-          style={{
-            marginTop: 40,
-            flexDirection: 'row',
-            gap: 12,
-          }}
-        >
-          <TrackedView
-            trackId="baseline-card"
-            style={{
-              width: 156,
-              padding: 18,
-              borderRadius: 20,
-              backgroundColor: 'white',
-            }}
-          >
-            <Text style={{ color: '#0f172a', fontSize: 15, fontWeight: '700' }}>
-              8pt Baseline
-            </Text>
-            <Text style={{ color: '#64748b', marginTop: 8, lineHeight: 20 }}>
+        <View style={styles.cardsRow}>
+          <TrackedView trackId="baseline-card" style={styles.baselineCard}>
+            <Text style={styles.cardTitle}>8pt Baseline</Text>
+            <Text style={styles.cardBody}>
               Validate whether vertical spacing respects your base unit.
             </Text>
           </TrackedView>
 
-          <TrackedView
-            trackId="columns-card"
-            style={{
-              width: 132,
-              marginTop: 14,
-              padding: 18,
-              borderRadius: 20,
-              backgroundColor: '#e2e8f0',
-            }}
-          >
-            <Text style={{ color: '#0f172a', fontSize: 15, fontWeight: '700' }}>
-              Columns
-            </Text>
-            <Text style={{ color: '#475569', marginTop: 8, lineHeight: 20 }}>
+          <TrackedView trackId="columns-card" style={styles.columnsCard}>
+            <Text style={styles.cardTitle}>Columns</Text>
+            <Text style={styles.cardBody}>
               Check horizontal alignment against the active grid.
             </Text>
           </TrackedView>
@@ -122,3 +61,81 @@ export default function App() {
     </GridOverlay>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#f8fafc',
+    paddingHorizontal: 24,
+    paddingTop: 88,
+  },
+  homeLabelContainer: {
+    width: 176,
+    paddingVertical: 10,
+  },
+  homeLabelText: {
+    color: '#0f172a',
+    fontSize: 13,
+    fontWeight: '700',
+    letterSpacing: 1.2,
+  },
+  heroTitleContainer: {
+    width: 248,
+    marginTop: 14,
+  },
+  heroTitleText: {
+    color: '#0f172a',
+    fontSize: 36,
+    lineHeight: 42,
+    fontWeight: '700',
+  },
+  heroDescriptionContainer: {
+    width: 286,
+    marginTop: 18,
+  },
+  heroDescriptionText: {
+    color: '#475569',
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  primaryCta: {
+    marginTop: 30,
+    width: 148,
+    paddingHorizontal: 18,
+    paddingVertical: 14,
+    borderRadius: 999,
+    backgroundColor: '#0f172a',
+  },
+  primaryCtaText: {
+    color: 'white',
+    fontWeight: '700',
+  },
+  cardsRow: {
+    marginTop: 40,
+    flexDirection: 'row',
+    gap: 12,
+  },
+  baselineCard: {
+    width: 156,
+    padding: 18,
+    borderRadius: 20,
+    backgroundColor: 'white',
+  },
+  columnsCard: {
+    width: 132,
+    marginTop: 14,
+    padding: 18,
+    borderRadius: 20,
+    backgroundColor: '#e2e8f0',
+  },
+  cardTitle: {
+    color: '#0f172a',
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  cardBody: {
+    color: '#475569',
+    marginTop: 8,
+    lineHeight: 20,
+  },
+});

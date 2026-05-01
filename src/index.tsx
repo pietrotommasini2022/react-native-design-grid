@@ -124,7 +124,9 @@ const TrackedNode = ({
   });
 };
 
-export const createTrackedComponent = <T extends ComponentType<any>>(component: T) => {
+export const createTrackedComponent = <T extends ComponentType<any>>(
+  component: T
+) => {
   return ({
     trackId,
     children,
@@ -190,7 +192,19 @@ const GridCorrections = ({
       ...segment,
       key: `${activeId}-${segment.edge}-${index}`,
     }));
-  }, [activeId, activeLayout, columns, gutter, height, isAuto, margin, sourceLayout, step, type, width]);
+  }, [
+    activeId,
+    activeLayout,
+    columns,
+    gutter,
+    height,
+    isAuto,
+    margin,
+    sourceLayout,
+    step,
+    type,
+    width,
+  ]);
 
   if (!activeId || !activeLayout) {
     return null;
@@ -482,6 +496,11 @@ export const GridOverlay = ({
     });
   }, [activeTrackId, selectableIds]);
 
+  const nextItemLabel =
+    selectableIds.length > 0 && resolvedActiveId
+      ? `Next Item (${selectableIds.indexOf(resolvedActiveId) + 1}/${selectableIds.length})`
+      : 'Next Item';
+
   const contextValue = useMemo<GridOverlayContextValue>(
     () => ({
       rootRef,
@@ -536,16 +555,24 @@ export const GridOverlay = ({
     }
 
     return (
-      <View style={[StyleSheet.absoluteFill, styles.columnsContainer, { paddingHorizontal: margin }]}>
+      <View
+        style={[
+          StyleSheet.absoluteFill,
+          styles.columnsContainer,
+          { paddingHorizontal: margin },
+        ]}
+      >
         {Array.from({ length: columns }).map((_, index) => (
           <View
             key={`col-${index}`}
-            style={{
-              width: columnWidth,
-              height: '100%',
-              backgroundColor: color,
-              marginRight: index === columns - 1 ? 0 : gutter,
-            }}
+            style={[
+              styles.column,
+              {
+                width: columnWidth,
+                backgroundColor: color,
+              },
+              index !== columns - 1 ? { marginRight: gutter } : null,
+            ]}
           />
         ))}
       </View>
@@ -558,8 +585,12 @@ export const GridOverlay = ({
         {children}
         {overlayVisible ? (
           <View style={StyleSheet.absoluteFill} pointerEvents="none">
-            {!isAuto && (type === 'columns' || type === 'both') && renderColumnsGrid()}
-            {!isAuto && (type === 'square' || type === 'both') && renderSquareGrid()}
+            {!isAuto &&
+              (type === 'columns' || type === 'both') &&
+              renderColumnsGrid()}
+            {!isAuto &&
+              (type === 'square' || type === 'both') &&
+              renderSquareGrid()}
             {isCorrectionVisible ? (
               <GridCorrections
                 activeId={resolvedActiveId}
@@ -597,14 +628,11 @@ export const GridOverlay = ({
                 onPress={cycleActiveId}
                 style={[
                   styles.controlButton,
-                  (activeTrackId || selectableIds.length === 0) && styles.controlButtonDisabled,
+                  (activeTrackId || selectableIds.length === 0) &&
+                    styles.controlButtonDisabled,
                 ]}
               >
-                <Text style={styles.controlButtonText}>
-                  {selectableIds.length > 0 && resolvedActiveId
-                    ? `Next Item (${selectableIds.indexOf(resolvedActiveId) + 1}/${selectableIds.length})`
-                    : 'Next Item'}
-                </Text>
+                <Text style={styles.controlButtonText}>{nextItemLabel}</Text>
               </Pressable>
             </View>
           </View>
@@ -621,6 +649,9 @@ const styles = StyleSheet.create({
   },
   columnsContainer: {
     flexDirection: 'row',
+  },
+  column: {
+    height: '100%',
   },
   horizontalLine: {
     position: 'absolute',
